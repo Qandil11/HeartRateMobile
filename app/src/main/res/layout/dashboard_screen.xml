@@ -1,0 +1,101 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Welcome Text -->
+        <TextView
+            android:id="@+id/tv_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Welcome, [UserName]"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="8dp" />
+
+        <!-- Metrics Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <!-- Average Heart Rate -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:background="@drawable/card_background">
+
+                <TextView
+                    android:id="@+id/tv_avg_heart_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="90 BPM"
+                    android:textSize="18sp"
+                    android:gravity="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avg Heart Rate"
+                    android:textSize="14sp"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!-- Abnormal Readings -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/card_background">
+
+                <TextView
+                    android:id="@+id/tv_abnormal_readings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="18sp"
+                    android:gravity="center" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Abnormal Readings"
+                    android:textSize="14sp"
+                    android:gravity="center" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Navigation Buttons -->
+        <Button
+            android:id="@+id/btn_trends"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="View Trends"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btn_reports"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Health Reports"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btn_settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Threshold Settings"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</ScrollView>

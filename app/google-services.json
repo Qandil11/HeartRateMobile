@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "862063487874",
-    "project_id": "booo-f86a4",
-    "storage_bucket": "booo-f86a4.appspot.com"
+    "project_number": "462903088454",
+    "project_id": "heartrateapp-440811",
+    "storage_bucket": "heartrateapp-440811.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:862063487874:android:06078e6bd2e70ffe29fd9b",
+        "mobilesdk_app_id": "1:462903088454:android:1b0844da21ba80e5dfc147",
         "android_client_info": {
-          "package_name": "com.fahad.auth_firebase"
+          "package_name": "com.monitoring.heartrate"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAKl_w6_rocT7WvsNoRGGMPyVHaIJxdTWE"
+          "current_key": "AIzaSyC7xitzZc7S5TW-Pj3vuw-o0B-5OI7C6ec"
         }
       ],
       "services": {
