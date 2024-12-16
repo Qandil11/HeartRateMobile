@@ -20,6 +20,8 @@ import android.graphics.Color
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 
 // MPAndroidChart Templates
 import com.github.mikephil.charting.utils.ColorTemplate
@@ -30,7 +32,17 @@ import com.github.mikephil.charting.components.Legend
 import com.monitoring.heartrate.domain.model.Zone
 
 @Composable
-fun PieChartView(zone: Zone) {
+fun PieChartView(zone: Zone?) {
+    // Check if zone is null or contains all zero values
+    if (zone == null || (zone.resting == 0 && zone.normal == 0 && zone.high == 0)) {
+        Text(
+            text = "No data available for Pie Chart",
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.fillMaxWidth()
+        )
+        return
+    }
+
     AndroidView(
         factory = { context ->
             PieChart(context).apply {
@@ -39,11 +51,15 @@ fun PieChartView(zone: Zone) {
                 setHoleColor(Color.WHITE)
                 setEntryLabelTextSize(12f)
                 setEntryLabelColor(Color.BLACK)
-                legend.isEnabled = true
-                legend.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-                legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
-                legend.orientation = Legend.LegendOrientation.HORIZONTAL
-                legend.setDrawInside(false)
+
+                // Configure legend
+                legend.apply {
+                    isEnabled = true
+                    verticalAlignment = Legend.LegendVerticalAlignment.TOP
+                    horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+                    orientation = Legend.LegendOrientation.HORIZONTAL
+                    setDrawInside(false)
+                }
                 setUsePercentValues(false)
             }
         },
@@ -51,19 +67,27 @@ fun PieChartView(zone: Zone) {
             .fillMaxWidth()
             .height(200.dp),
         update = { pieChart ->
-            val entries = listOf(
-                PieEntry(zone.resting.toFloat(), "Resting"),
-                PieEntry(zone.normal.toFloat(), "Normal"),
-                PieEntry(zone.high.toFloat(), "High")
-            )
-            val dataSet = PieDataSet(entries, "Health Zones").apply {
-                colors = ColorTemplate.MATERIAL_COLORS.map { it }
-                valueTextSize = 12f
-                valueTextColor = Color.BLACK
-            }
+            // Safely prepare entries with non-zero values
+            val entries = mutableListOf<PieEntry>()
 
-            pieChart.data = PieData(dataSet)
-            pieChart.invalidate() // Refresh the chart
+            if (zone.resting > 0) entries.add(PieEntry(zone.resting.toFloat(), "Resting"))
+            if (zone.normal > 0) entries.add(PieEntry(zone.normal.toFloat(), "Normal"))
+            if (zone.high > 0) entries.add(PieEntry(zone.high.toFloat(), "High"))
+
+            if (entries.isNotEmpty()) {
+                val dataSet = PieDataSet(entries, "Health Zones").apply {
+                    colors = listOf(Color.GREEN, Color.BLUE, Color.RED)
+                    valueTextSize = 12f
+                    valueTextColor = Color.BLACK
+                }
+
+                pieChart.data = PieData(dataSet)
+                pieChart.invalidate() // Refresh the chart
+            } else {
+                // Clear chart if entries are empty
+                pieChart.data = null
+                pieChart.invalidate()
+            }
         }
     )
 }

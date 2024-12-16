@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.monitoring.heartrate.domain.model.DashboardData
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -19,10 +21,13 @@ fun DashboardContent(
     navController: NavController,
     signOut: () -> Unit
 ) {
+    // Add vertical scrolling
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(scrollState) // Enable scrolling
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -39,7 +44,7 @@ fun DashboardContent(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Welcome, ${data.userName}!",
+                    text = "Welcome, all!",
                     style = MaterialTheme.typography.headlineLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.padding(bottom = 8.dp)
@@ -75,7 +80,7 @@ fun DashboardContent(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Latest Alert Section
+        // Latest Alert Section with Follow-Up Action
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -96,9 +101,27 @@ fun DashboardContent(
                     style = MaterialTheme.typography.bodyLarge,
                     color = if (data.latestAlert.isNotEmpty()) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
                 )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Add follow-up action text
+                Text(
+                    text = "Tip: Adjust your heart rate thresholds for better monitoring.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Add a button for navigating to Threshold Management
+                Button(
+                    onClick = { navController.navigate("threshold_management") },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Adjust Thresholds")
+                }
             }
         }
-
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -120,8 +143,5 @@ fun DashboardContent(
         ) {
             Text("Health Reports")
         }
-
-
-
     }
 }

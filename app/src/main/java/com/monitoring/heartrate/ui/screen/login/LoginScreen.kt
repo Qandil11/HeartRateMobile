@@ -65,7 +65,7 @@ fun LoginScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Welcome to the App",
+                text = "Heart Rate App",
                 color = MaterialTheme.colorScheme.primary,
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Bold,

@@ -84,7 +84,7 @@ fun TrendsContent(
         AndroidView(
             factory = { context ->
                 LineChart(context).apply {
-                    description.text = "Heart Rate Over Time"
+                    description.text = "Heart Rate Trends"
                     legend.isEnabled = false
 
                     // Configure zoom and scroll
@@ -98,23 +98,27 @@ fun TrendsContent(
                     // Configure axes
                     xAxis.position = XAxis.XAxisPosition.BOTTOM
                     xAxis.granularity = 1f
-                    axisLeft.axisMinimum = data.readings.minOfOrNull { it.heartRate.toFloat() } ?: 0f
-                    axisLeft.axisMaximum = data.readings.maxOfOrNull { it.heartRate.toFloat() } ?: 120f
+                    xAxis.textSize = 10f
+                    axisLeft.axisMinimum = 50f // Adjusted minimum for clean display
+                    axisLeft.axisMaximum = 150f // Adjusted max for reasonable range
                     axisRight.isEnabled = false
 
+                    // Format X-axis based on granularity
                     xAxis.valueFormatter = object : ValueFormatter() {
                         override fun getFormattedValue(value: Float): String {
                             val date = Date(value.toLong())
                             val format = when (selectedGranularity) {
                                 "hourly" -> SimpleDateFormat("HH:mm", Locale.getDefault())
                                 "daily" -> SimpleDateFormat("dd MMM", Locale.getDefault())
-                                else -> SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                                "all" -> SimpleDateFormat("dd MMM", Locale.getDefault())
+                                else -> SimpleDateFormat("dd MMM", Locale.getDefault())
                             }
                             return format.format(date)
                         }
                     }
 
-                    this.data = prepareLineData(data.readings)
+
+                    this.data = prepareLineData(data.readings, selectedGranularity)
                     invalidate() // Refresh the chart
                 }
             },
@@ -124,39 +128,30 @@ fun TrendsContent(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
-
-        // Back to Dashboard Button
-        Button(
-            onClick = { navController.navigate("dashboard") },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Back to Dashboard")
-        }
     }
 }
 
-fun prepareLineData(readings: List<Reading>): LineData {
-    val entries = readings.mapNotNull {
-        try {
-            Entry(it.timestamp.toFloat(), it.heartRate.toFloat())
-        } catch (e: Exception) {
-            Log.e("ChartData", "Invalid data point: $it", e)
-            null
-        }
+fun prepareLineData(readings: List<Reading>, granularity: String): LineData {
+    val groupedEntries = when (granularity) {
+        "hourly" -> readings.groupBy { SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date(it.timestamp)) }
+        "daily" -> readings.groupBy { SimpleDateFormat("dd MMM", Locale.getDefault()).format(Date(it.timestamp)) }
+        "all" -> readings.groupBy { SimpleDateFormat("dd MMM", Locale.getDefault()).format(Date(it.timestamp)) }
+        else -> readings.groupBy { SimpleDateFormat("dd MMM", Locale.getDefault()).format(Date(it.timestamp)) }
     }
 
-    if (entries.isEmpty()) {
-        Log.e("ChartData", "No valid data points to display")
-        return LineData()
+    val averagedEntries = groupedEntries.entries.mapIndexed { index, entry ->
+        val avgHeartRate = entry.value.map { it.heartRate }.average().toFloat()
+        Entry(index.toFloat(), avgHeartRate) // Use index for X-axis position
     }
 
-    val lineDataSet = LineDataSet(entries, "Heart Rate").apply {
+    val dataSet = LineDataSet(averagedEntries, "Heart Rate").apply {
         color = Color.BLUE
         valueTextColor = Color.BLACK
         lineWidth = 2f
         setCircleColor(Color.RED)
         circleRadius = 4f
-        mode = LineDataSet.Mode.LINEAR
+        mode = LineDataSet.Mode.CUBIC_BEZIER // Smooth lines
     }
-    return LineData(lineDataSet)
+
+    return LineData(dataSet)
 }

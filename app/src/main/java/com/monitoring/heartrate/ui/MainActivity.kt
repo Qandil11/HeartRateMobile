@@ -1,7 +1,6 @@
 package com.monitoring.heartrate.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -47,7 +46,7 @@ import com.monitoring.heartrate.ui.screen.register.RegisterScreen
 import com.monitoring.heartrate.ui.screen.register.RegisterViewModel
 import com.monitoring.heartrate.ui.screen.threshhold.ThresholdManagementScreen
 import com.monitoring.heartrate.ui.screen.threshhold.ThresholdViewModel
-import com.monitoring.heartrate.ui.theme.AuthfirebaseTheme
+import com.monitoring.heartrate.ui.theme.HeartMonitorTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,7 +66,7 @@ class MainActivity : ComponentActivity() {
             )
         )
         setContent {
-            AuthfirebaseTheme {
+            HeartMonitorTheme {
 
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
