@@ -1,65 +1,102 @@
-# Kotlin Firebase Authentication
+# ❤️ Heart Rate Monitoring App
 ![Build](https://github.com/Qandil11/HeartRateMobile/actions/workflows/android-ci.yml/badge.svg)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
-This is a sample Android application showcasing Firebase authentication using Kotlin. The app demonstrates modern Android development practices, including the use of Hilt for dependency injection, MVVM architecture, and the Repository pattern.
-
-## Features
-
-- User registration with email and password
-- User login with email and password
-- User profile management (update display name, profile photo)
-- Email verification and account management
-- Simple and clean UI design
-- Responsive layout using Jetpack Compose
-
-## Technologies Used
-
-- Kotlin
-- Firebase Authentication
-- Hilt for dependency injection
-- MVVM architecture
-- Repository pattern
-- Jetpack Compose for UI
-- Coroutine for asynchronous programming
-
-<div>
-    <img src="https://github.com/fahad0samara/kotlin-firebase-auth/assets/90055525/320263ce-f7c4-4a20-a710-cd6348818fcc" width="190" />
-    <img src="https://github.com/fahad0samara/kotlin-firebase-auth/assets/90055525/05fa992e-deb0-4566-8c3c-2af22acfae4e" width="190" />
-    <img src="https://github.com/fahad0samara/kotlin-firebase-auth/assets/90055525/e3e8aba1-f319-4241-96b7-2a90fb0c5109" width="190" />
-  <img src="https://github.com/fahad0samara/kotlin-firebase-auth/assets/90055525/19435be9-91af-4bf9-b325-b8ebcccfaa6c" width="190" />
-  <img src="https://github.com/fahad0samara/kotlin-firebase-auth/assets/90055525/bd534cb6-d48e-41fc-9b06-ed40f2301a8f" width="190" />
-
-
-</div>
-
-
-
-## Project Structure
-
-The project follows a modular structure with a clear separation of concerns. Key components include:
-
-- **app:** Main application module
-- **data:** Data layer containing the repository and data sources
-- **domain:** Domain layer containing the business logic and models
-- **presentation:** UI layer with Jetpack Compose components and ViewModels
-
-## Getting Started
-
-To run this project locally, follow these steps:
-
-1. Clone the repository: `git clone https://github.com/fahad0samara/kotlin-firebase-auth.git`
-2. Open the project in Android Studio.
-3. Build and run the app on an emulator or physical device.
-
-## Contributing
-
-Contributions are welcome! If you have any suggestions, improvements, or bug fixes, please open an issue or submit a pull request.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+A **real-time heart rate monitoring Android app** built with **Kotlin** and **Jetpack Compose**, integrated with a **Python Flask backend** and **Google Cloud Firestore** for secure cloud-based data storage.  
+This app allows users to measure, track, and analyze heart rate trends while receiving alerts for abnormal readings.
 
 ---
 
-Feel free to reach out if you have any questions or feedback!
+## ✨ Features
+
+- 📲 **User Authentication** (Firebase Email/Password)
+- ❤️ **Real-time Heart Rate Tracking** directly from the app
+- ☁️ **Cloud Integration with Firestore** (secure storage of readings, thresholds, and reports)
+- 📊 **Health Reports** with summaries, min/max/average readings
+- 🔔 **Threshold Alerts**: get notified when heart rate is abnormal
+- 📈 **Trends & Insights**: visualize data with charts and health zones
+- 🔐 **Privacy First**: only processed data stored in Firestore; no external APIs
+
+---
+
+## 📸 Screenshots
+
+<div>
+<img width="230" height="406" alt="Picture 13" src="https://github.com/user-attachments/assets/e0056e6c-2e34-4aac-9b49-e59f3e035afe" />
+<img width="222" height="389" alt="Picture 5" src="https://github.com/user-attachments/assets/a005bb9d-b437-40d5-9950-7166abc51b8e" />
+<img width="226" height="396" alt="Picture 4" src="https://github.com/user-attachments/assets/baed9e3b-4a79-463a-a5d0-b9bd84dfeff3" />
+<img width="226" height="396" alt="Picture 2" src="https://github.com/user-attachments/assets/dbf74d26-7b20-4539-b8b4-2dabbeab419d" />
+<img width="226" height="396" alt="Picture 1" src="https://github.com/user-attachments/assets/2d6ddd32-5550-46ab-a57a-0debcc82ab16" />
+</div>
+
+---
+
+## 🛠 Tech Stack
+
+- **Frontend (Android)**: Kotlin, Jetpack Compose, MVVM, Coroutines
+- **Backend**: Python (Flask microservices)
+- **Cloud**: Google Cloud Firestore
+- **Auth**: Firebase Authentication
+- **Visualization**: Compose Charts
+
+---
+
+## ⚙️ Project Structure
+
+```
+app/          # Android app (Compose UI, ViewModels, Repositories)
+server/       # Python Flask backend for API + Firestore integration
+```
+
+---
+
+## 🚀 Getting Started
+
+### Android App
+```bash
+# Clone repo
+git clone https://github.com/Qandil11/HeartRateMobile.git
+cd HeartRateMobile
+
+# Build and run
+./gradlew assembleDebug
+adb install app/build/outputs/apk/debug/app-debug.apk
+```
+
+### Server (Python Flask)
+```bash
+cd HeartRateServer
+pip install -r requirements.txt
+python app.py
+```
+
+---
+
+## 🧪 Testing
+
+- Unit tests included for data handling and alert logic.
+```bash
+./gradlew test
+pytest server/tests
+```
+
+---
+
+## 🗺 Roadmap
+
+- [ ] Add push notifications for threshold alerts
+- [ ] Integrate wearable device sensor APIs
+- [ ] Add ML models for predictive heart health insights
+- [ ] Deploy backend on Google Cloud Run
+
+---
+
+## 📜 License
+
+```
+MIT License
+Copyright (c) 2025 Qandil Tariq
+```
+
+---
+
