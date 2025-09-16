@@ -1,4 +1,6 @@
 # Kotlin Firebase Authentication
+![Build Status](https://github.com/Qandil11/HeartRateMobile/actions/workflows/android-ci.yml/badge.svg)
+![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
 This is a sample Android application showcasing Firebase authentication using Kotlin. The app demonstrates modern Android development practices, including the use of Hilt for dependency injection, MVVM architecture, and the Repository pattern.
 
