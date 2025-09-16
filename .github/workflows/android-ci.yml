@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ master, main ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -20,10 +20,26 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
+          cache: 'gradle'
+
+      # Install Android SDK + specific components
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install build-tools and platforms
+        run: |
+          sdkmanager --install "platforms;android-35" "build-tools;35.0.0" "platform-tools" "platforms;android-34"
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew build --stacktrace
+      # If you want fastest green builds first, assemble debug only (no tests/lint)
+      - name: Assemble debug
+        run: ./gradlew :app:assembleDebug --stacktrace
+
+      # Optionally run tests and lint (uncomment when ready)
+      # - name: Run unit tests
+      #   run: ./gradlew testDebugUnitTest
+
+      # - name: Run Lint
+      #   run: ./gradlew :app:lintDebug
